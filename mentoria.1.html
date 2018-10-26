@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function ComponenteA(props) {
+      return (
+        <div style={{backgroundColor: "#006699", color: "white", width: 200, height: 200 }}>
+          {props.children}
+        </div>
+      );
+    }
+
+    function ComponenteB(props) {
+      return (
+        <div style={{backgroundColor: "#880099", color: "white", width: 300, height: 200 }}>
+          <h1>Super componente diferente</h1>
+          <h2>é bem diferente mesmo</h2>
+        </div>
+      );
+    }
+
+    function ComponenteC(props) {
+      return (
+        <div style={{backgroundColor: "#208977", color: "white", width: 300, height: 300 }}>
+          <h1>Mais um componente</h1>
+          <div>{props.children}</div>
+        </div>
+      );
+    }
+
+    function Button(props) {
+      return (
+        <button onClick={props.onClick}>
+          {props.children}
+        </button>
+      );
+    }
+
+    class App extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          renderedComponent: "A"
+        };
+
+        this.handleButtonClick = this.handleButtonClick.bind(this);
+        this.renderComponent = this.renderComponent.bind(this);
+      }
+
+      handleButtonClick(component) {
+        this.setState({renderedComponent: component})
+      }
+
+      renderComponent() {
+        if (this.state.renderedComponent === "A") {
+          return (
+            <ComponenteA>
+              <p>Esse é o meu componente A</p>
+            </ComponenteA>
+          );
+        } else if(this.state.renderedComponent === "B") {
+          return <ComponenteB />;
+        } else {
+          return (
+            <ComponenteC>
+              <p>Super componente C</p>
+              <Button onClick={() => this.handleButtonClick("B")}>Vai Pro B (Agora eu quero ver)</Button>
+            </ComponenteC>
+          );
+        }
+      }
+
+      render() {
+        return (
+          <div>
+            <Button onClick={() => this.handleButtonClick("A")}> Componente A </Button>
+            <Button onClick={() => this.handleButtonClick("B")}> Componente B </Button>
+            <Button onClick={() => this.handleButtonClick("C")}> Componente C </Button>
+            <div>
+              {this.renderComponent()}
+            </div>
+          </div>
+        );
+      }
+    }
+
+    function Laboratoria(props) {
+      return <div>{props.text}</div>
+    }
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById("app")
+    )
+  </script>
+</body>
+</html>

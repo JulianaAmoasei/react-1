@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+  <title>Document</title>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    function Button(props) {
+      return <button onClick={props.meuClick}>{props.children}</button>
+    }
+
+    function Banana(props) {
+      return <Button meuClick={props.clickdasol}>asas</Button>
+    }
+
+    class App extends React.Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          loading: true,
+          color: "#008833",
+          text: "A laboratoria é super legal uhul"
+        }
+
+        this.cliquezinho = this.cliquezinho.bind(this);
+        this.clickDaReprograma = this.clickDaReprograma.bind(this);
+        this.clickDaLab = this.clickDaLab.bind(this);
+      }
+
+      cliquezinho() {
+        this.setState({color: "#006699"});
+      }
+
+      clickDaReprograma() {
+        this.setState(prevState => {
+          let newState = {...prevState};
+          if (prevState.text == "A reprograma é legal mas nao eh tao legal quanto a laboratoria") {
+            newState.text = "A laboratoria é super legal uhul"
+          } else {
+            newState.text = "A reprograma é legal mas nao eh tao legal quanto a laboratoria";
+          }
+          return newState;
+        });
+      }
+
+      clickDaLab() {
+        this.setState({text: "A laboratoria é super legal uhul"});
+      }
+
+      render() {
+        return (
+          <div>
+            <div style={{width: 200, height: 200, backgroundColor: this.state.color}}></div>
+            <button onClick={this.cliquezinho} >Clique aqui</button>
+            <Button meuClick={this.clickDaReprograma}>Clique da Reprograma</Button>
+            <Button meuClick={this.clickDaLab}>Clique da Lab</Button>
+            <div>
+              <Laboratoria text={this.state.text} />
+            </div>
+          </div>
+        );
+      }
+    }
+
+    function Laboratoria(props) {
+      return <div>{props.text}</div>
+    }
+
+    ReactDOM.render(
+      <App />,
+      document.getElementById("app")
+    )
+  </script>
+</body>
+</html>

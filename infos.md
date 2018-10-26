@@ -1,0 +1,1 @@
+React.createElement(component, props, ...children)
